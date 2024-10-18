@@ -2,9 +2,14 @@ import React from 'react'
 import { FlatList, Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Link } from 'expo-router';
 import {FontAwesome} from '@expo/vector-icons'
+
 import { CATEGORIES } from '../../assets/categories';
+import { useCartStore } from '../store/cart-store';
 
 export const ListHeader = () => {
+
+  const {getItemCount} = useCartStore()
+
   return (
     <View style={[styles.headerContainer]}>
 
@@ -32,7 +37,9 @@ export const ListHeader = () => {
                   />
 
                   <View style={styles.badgeContainer}>
-                    <Text style={styles.badgeText}>{1}</Text>
+                    <Text style={styles.badgeText}>
+                      {getItemCount()}
+                    </Text>
                   </View>
                 </View>
               )}

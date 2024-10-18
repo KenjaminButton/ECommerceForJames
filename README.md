@@ -21,6 +21,9 @@ My attempt to revive the Late 2013 Trash Can Mac Pro 😁
 
 `npm start --ios`
 `i` for IOS simulator
+`npm expo start -c`
+`npm start`
+
 
 Temporarily increase watchlimit `ulimit -n 4096` for the terminal session
 
