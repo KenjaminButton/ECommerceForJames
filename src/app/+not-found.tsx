@@ -1,6 +1,8 @@
 import { View, StyleSheet } from 'react-native';
 import { Link, Stack } from 'expo-router';
 
+// https://docs.expo.dev/tutorial/add-navigation/#add-a-not-found-route
+
 export default function NotFoundScreen() {
   return (
     <>
@@ -17,7 +19,7 @@ export default function NotFoundScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#0172B2',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -25,6 +27,6 @@ const styles = StyleSheet.create({
   button: {
     fontSize: 20,
     textDecorationLine: 'underline',
-    color: '#fff',
+    color: '#D9D5EC',
   },
 });
