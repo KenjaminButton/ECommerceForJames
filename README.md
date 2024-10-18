@@ -33,3 +33,5 @@ Temporarily increase watchlimit `ulimit -n 4096` for the terminal session
 ```
 
 [Setting up Routing ](docs.expo.dev/router/introduction)
+
+To Do: // Change out the gray color scheme later

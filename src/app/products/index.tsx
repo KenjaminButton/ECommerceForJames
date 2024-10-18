@@ -1,14 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 
-
-const Home = () => {
+const Product = () => {
   return (
     <View>
-      <Text>Homer Simpson</Text>
+      <Text>Product</Text>
     </View>
   )
 }
 
-export default Home
+export default Product
 
 const styles = StyleSheet.create({})
