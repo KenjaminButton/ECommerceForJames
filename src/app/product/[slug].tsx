@@ -20,11 +20,12 @@ const ProductDetails = () => {
 
   const initialQuantity = cartItem ? cartItem.quantity : 1;
 
-  const [quantity, setQuantity] = useState(initialQuantity)
-
   const increaseQuantity = () => {}
   const decreaseQuantity = () => {}
   const addToCart = () => {}
+
+  const [quantity, setQuantity] = useState(initialQuantity)
+  const totalPrice = (quantity * product.price).toFixed(2)
 
   return (
     <View style={styles.container}>
@@ -34,6 +35,12 @@ const ProductDetails = () => {
       <View style={{padding: 16, flex: 1}}>
         <Text style={styles.title}>Title: {product.title}</Text>
         <Text style={styles.slug}>Slug: {product.slug}</Text>
+        <View style={styles.priceContainer}>
+          <Text style={styles.price}>
+            Unit Price: ${product.price.toFixed(2)}
+          </Text>
+          <Text style={styles.price}>Total Price: ${totalPrice}</Text>
+        </View>
       </View>
     </View>
   )
