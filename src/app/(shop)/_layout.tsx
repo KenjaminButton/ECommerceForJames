@@ -53,6 +53,7 @@ const TabsLayout = () => {
 };
 
 export default TabsLayout;
+
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
