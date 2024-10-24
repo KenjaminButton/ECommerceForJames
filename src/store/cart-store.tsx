@@ -24,6 +24,15 @@ const initialCartItems: CartItemType[] = []
 export const useCartStore = create<CartState>(  (set, get) => ({
   items: initialCartItems,
   addItem: (item: CartItemType) => {
+    // console.log("addItem:::", item)
+
+    /* Extra code to load product image */
+    const product = PRODUCTS.find(p => p.id === item.id)
+    if (!product) {
+      console.error("Product not found for ID: ", item.id)
+      return;
+    }
+
     const existingItem = get().items.find(i => i.id === item.id)
     if (existingItem) {
       set(state => ({

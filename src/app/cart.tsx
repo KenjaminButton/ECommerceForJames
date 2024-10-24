@@ -1,5 +1,53 @@
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {View, Text, StyleSheet, Alert, Platform, TouchableOpacity, FlatList, Image} from 'react-native';
 import { useCartStore } from '../store/cart-store';
+import { StatusBar } from 'expo-status-bar';
+
+type CartItemType = {
+  id: number;
+  title: string;
+  image: any;
+  price: number;
+  quantity: number;
+}
+
+type CartItemProps = {
+  item: CartItemType
+  onRemove: (id: number) => void
+  onIncrement: (id: number) => void
+  onDecrement: (id: number) => void
+}
+
+const CartItem = ({
+  item,
+  onDecrement,
+  onIncrement,
+  onRemove
+}: CartItemProps) => {
+  console.log('ITEM:::', item);
+  return (
+    <View style={styles.cartItem}>
+      <Image 
+        source={item.heroImage} 
+        style={styles.itemImage} 
+        onError={(error) => console.log('Error loading image:', error.nativeEvent.error)}
+
+      />
+      <View style={styles.itemDetails}>
+        <Text style={styles.itemDetails}>{item.title}</Text>
+        <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+        <View style={styles.quantityContainer}></View>
+        <TouchableOpacity
+          onPress={ () => onDecrement(item.id)}
+          style={styles.quantityButton}
+        >
+          <Text style={styles.quantityButtonText}>-</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+        
+
+}
 
 export default function Cart() {
   const {
@@ -14,12 +62,37 @@ export default function Cart() {
     Alert.alert('Proceeding to Checkout', `Total amount: $${getTotalPrice()}`)
   }
 
-
   return (
     <View style={styles.container}>
-      <Text>
+      <StatusBar style={Platform.OS === "ios" ? "light" : "auto" }/>
+      
+      <FlatList 
+        data={items}
+        keyExtractor={item => item.id.toString()}
+        renderItem={ ( {item}) => (
+          <CartItem 
+            item={item} 
+            onRemove={removeItem} 
+            onIncrement={incrementItem} 
+            onDecrement={decrementItem}
+          />
+        )}
+        contentContainerStyle={styles.cartList}
+      />
+
+      <View style={styles.footer}>
+        <Text style={styles.totalText}>Total: ${getTotalPrice()}</Text>
+        <TouchableOpacity
+          onPress={handleCheckout}
+          style={styles.checkoutButton}
+        >
+          <Text style={styles.checkoutButtonText}>Checkout</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* <Text>
         Eric Cartman is a fictional character from the animated television series "South Park," created by Trey Parker and Matt Stone. Voiced by Parker, Cartman is known for his outrageous behavior, dark humor, and manipulative personality. Often portrayed as selfish, bigoted, and politically incorrect, he frequently engages in schemes that reflect his desire for power and control. Despite his flaws, Cartman's character often serves as a satirical representation of societal issues, making him both controversial and memorable. Over the years, he has become an iconic figure in pop culture, embodying the show's sharp critique of American life and values.
-      </Text>
+      </Text> */}
     </View>
   );
 
@@ -87,7 +160,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   checkoutButton: {
-    backgroundColor: '#28a745',
+    backgroundColor: '#D9D5EC', 
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 8,
