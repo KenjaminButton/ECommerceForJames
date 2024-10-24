@@ -1,14 +1,14 @@
 import { FlatList, ListRenderItem, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { ORDERS } from '../../../../assets/orders'
-import { Order } from '../../../../assets/types/order'
-import { Link } from 'expo-router'
+import { Order, OrderStatus } from '../../../../assets/types/order'
+import { Link, Stack } from 'expo-router'
 
-const statusDisplayText: Record<string, string> = {
+const statusDisplayText: Record<OrderStatus, string> = {
   Pending: 'Pending',
   Completed: 'Completed',
   Shipped: 'Shipped',
-  InTransit: 'In Transit'
+  InTransit: 'In Transit',
 }
 
 const renderItem: ListRenderItem<Order> = ({item}) => 
@@ -33,6 +33,7 @@ const renderItem: ListRenderItem<Order> = ({item}) =>
 const Orders = () => {
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{title: "Orders"}} />
       <FlatList
         data={ORDERS}
         keyExtractor={item => item.id.toString()}
