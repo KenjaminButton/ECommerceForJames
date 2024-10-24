@@ -35,14 +35,30 @@ const CartItem = ({
       <View style={styles.itemDetails}>
         <Text style={styles.itemDetails}>{item.title}</Text>
         <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
-        <View style={styles.quantityContainer}></View>
-        <TouchableOpacity
-          onPress={ () => onDecrement(item.id)}
-          style={styles.quantityButton}
-        >
-          <Text style={styles.quantityButtonText}>-</Text>
-        </TouchableOpacity>
+        <View style={styles.quantityContainer}>
+          <TouchableOpacity
+            onPress={ () => onDecrement(item.id)}
+            style={styles.quantityButton}
+          >
+            <Text style={styles.quantityButtonText}>-</Text>
+          </TouchableOpacity>
+          <Text style={styles.itemQuantity}>{item.quantity}</Text>
+          <TouchableOpacity
+            onPress={() => onIncrement(item.id)}
+            style={styles.quantityButton}
+          >
+            <Text style={styles.quantityButtonText}>+</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
+      <TouchableOpacity
+        onPress={() => onRemove(item.id)}
+        style={styles.removeButton}
+      >
+        <Text style={styles.removeButtonText}>Remove</Text>
+      </TouchableOpacity>
+
     </View>
   )
         
@@ -90,9 +106,7 @@ export default function Cart() {
         </TouchableOpacity>
       </View>
 
-      {/* <Text>
-        Eric Cartman is a fictional character from the animated television series "South Park," created by Trey Parker and Matt Stone. Voiced by Parker, Cartman is known for his outrageous behavior, dark humor, and manipulative personality. Often portrayed as selfish, bigoted, and politically incorrect, he frequently engages in schemes that reflect his desire for power and control. Despite his flaws, Cartman's character often serves as a satirical representation of societal issues, making him both controversial and memorable. Over the years, he has become an iconic figure in pop culture, embodying the show's sharp critique of American life and values.
-      </Text> */}
+
     </View>
   );
 
