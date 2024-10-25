@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
 import { useToast } from 'react-native-toast-notifications';
 import { PRODUCTS } from '../../../assets/products';
@@ -20,9 +20,40 @@ const ProductDetails = () => {
 
   const initialQuantity = cartItem ? cartItem.quantity : 1;
 
-  const increaseQuantity = () => {}
-  const decreaseQuantity = () => {}
-  const addToCart = () => {}
+  const increaseQuantity = () => {
+    if (quantity < product.maxQuantity) {
+      setQuantity(prev => prev + 1)
+      incrementItem(product.id)
+    } else {
+      toast.show("You can't add anymore items", {
+        type: 'warning',
+        placement: 'top',
+        duration: 1500
+      })
+    }
+  }
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev -1)
+      decrementItem(product.id)
+    }
+  }
+
+  const addToCart = () => {
+    addItem({
+      id: product.id,
+      title: product.title,
+      heroImage: product.heroImage,
+      price: product.price,
+      maxQuantity: product.maxQuantity,
+      quantity,
+    });
+    toast.show('Added to cart', {
+      type: 'success',
+      placement: 'top',
+      duration: 1500,
+    });
+  };
 
   const [quantity, setQuantity] = useState(initialQuantity)
   const totalPrice = (quantity * product.price).toFixed(2)
@@ -41,6 +72,52 @@ const ProductDetails = () => {
           </Text>
           <Text style={styles.price}>Total Price: ${totalPrice}</Text>
         </View>
+
+        <FlatList
+          data={product.imagesUrl}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <Image source={item} style={styles.image} />
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.imagesContainer}
+        />
+
+
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.quantityButton}
+            onPress={decreaseQuantity}
+            disabled={quantity <= 1}
+          >
+            <Text style={styles.quantityButtonText}>-</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.quantity}>{quantity}</Text>
+
+          <TouchableOpacity
+            style={styles.quantityButton}
+            onPress={increaseQuantity}
+            disabled={quantity >= product.maxQuantity}
+          >
+            <Text style={styles.quantityButtonText}>+</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.addToCartButton,
+              { opacity: quantity === 0 ? 0.5 : 1 },
+            ]}
+            onPress={addToCart}
+            disabled={quantity === 0}
+          >
+            <Text style={styles.addToCartText}>Add to Cart</Text>
+          </TouchableOpacity>
+        </View>
+
+
       </View>
     </View>
   )
@@ -98,7 +175,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007bff',
+    backgroundColor: '#D9D5EC',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 8,
@@ -114,7 +191,7 @@ const styles = StyleSheet.create({
   },
   addToCartButton: {
     flex: 1,
-    backgroundColor: '#28a745',
+    backgroundColor: '#0172B2',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
