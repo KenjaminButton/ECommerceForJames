@@ -25,6 +25,7 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "scheme": "James-React-Native-Shop" 
   }
 }
