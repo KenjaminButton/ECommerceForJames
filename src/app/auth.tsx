@@ -2,9 +2,10 @@ import * as zod from 'zod'
 import {View, Text, StyleSheet, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
 import {useForm, Controller} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { supabase } from '../lib/supabase';
 import { Toast } from 'react-native-toast-notifications';
+import { useAuth } from '../providers/auth-provider';
 
 const authSchema = zod.object({
   email:zod.string().email({message: 'Invalid email address'}),
@@ -14,6 +15,10 @@ const authSchema = zod.object({
 })
 
 export default function Auth() {
+  const {session} = useAuth()
+
+  if (session) return <Redirect href='/' />
+
   const {control, handleSubmit, formState} = useForm({
     resolver: zodResolver(authSchema),
     defaultValues: {
