@@ -24,8 +24,9 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-secure-store"
     ],
-    "scheme": "James-React-Native-Shop" 
+    "scheme": "James-React-Native-Shop"
   }
 }

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { Tabs } from "expo-router"
 import { PRODUCTS } from '../../../assets/products'
 import {ProductListItem} from '../../components/product-list-item'
@@ -8,21 +8,21 @@ import Auth from '../auth'
 const Home = () => {
   return (
 
-    <Auth />
+    // <Auth />
 
-    // <View>
-    //   <FlatList 
-    //     data={PRODUCTS} 
-    //     renderItem={({ item }) => <ProductListItem product={item} />}
-    //     keyExtractor={item => item.id.toString()}
-    //     numColumns={2}
-    //     ListHeaderComponent={ListHeader}
-    //     contentContainerStyle={styles.flatListContent}
-    //     columnWrapperStyle={styles.flatListColumn}
-    //     style={{paddingHorizontal: 10, paddingVertical: 5}}
-    //   />
+    <View>
+      <FlatList 
+        data={PRODUCTS} 
+        renderItem={({ item }) => <ProductListItem product={item} />}
+        keyExtractor={item => item.id.toString()}
+        numColumns={2}
+        ListHeaderComponent={ListHeader}
+        contentContainerStyle={styles.flatListContent}
+        columnWrapperStyle={styles.flatListColumn}
+        style={{paddingHorizontal: 10, paddingVertical: 5}}
+      />
         
-    // </View>
+    </View>
   )
 }
 

@@ -2,6 +2,9 @@ import * as zod from 'zod'
 import {View, Text, StyleSheet, ImageBackground, TextInput, TouchableOpacity} from 'react-native';
 import {useForm, Controller} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
+import { Stack } from 'expo-router';
+import { supabase } from '../lib/supabase';
+import { Toast } from 'react-native-toast-notifications';
 
 const authSchema = zod.object({
   email:zod.string().email({message: 'Invalid email address'}),
@@ -19,11 +22,29 @@ export default function Auth() {
     }
   })
 
-  const signIn = (data:zod.infer<typeof authSchema>) => {
-    console.log("DATA:::", data)
+  const signIn = async (data:zod.infer<typeof authSchema>) => {
+    const {error} = await supabase.auth.signInWithPassword(data)
+    if (error) {
+      alert(error.message)
+    } else {
+      Toast.show('Signed in successfully', {
+        type: 'success',
+        placement: 'top', 
+        duration: 1500
+      })
+    }
   }
-  const signUp = (data:zod.infer<typeof authSchema>) => {
-    console.log("DATA:::", data)
+  const signUp = async (data:zod.infer<typeof authSchema>) => {
+    const {error} = await supabase.auth.signUp(data)
+    if (error) {
+      alert(error.message)
+    } else {
+      Toast.show('Sign Up successful', {
+        type: 'success',
+        placement: 'top', 
+        duration: 1500
+      })
+    }
   }
 
     return (
@@ -34,6 +55,7 @@ export default function Auth() {
         style={styles.backgroundImage}
       >
         <View style={styles.overlay} />
+
         <View style={styles.container}>
           <Text style={styles.title}>Welcome</Text>
           <Text style={styles.subtitle}>Authenticate yourself, pretty pretty pretty please?</Text>
