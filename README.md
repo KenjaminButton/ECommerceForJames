@@ -46,3 +46,5 @@ To Do: // Change out the gray color scheme later
 
 [Expo Docs Using SupaBase Apple Login](https://supabase.com/docs/guides/auth/social-login/auth-apple?platform=react-native&utm_source=expo&utm_medium=referral&utm_term=expo-react-native)
 [Expo Docs Using SupaBase Google Login](https://supabase.com/docs/guides/auth/social-login/auth-google?platform=react-native&utm_source=expo&utm_medium=referral&utm_term=expo-react-native)
+
+Updating to GitHub USER Page
